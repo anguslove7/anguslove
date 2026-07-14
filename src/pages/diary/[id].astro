@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = (await getCollection('diary'))
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+  return entries.map((entry, i) => ({
+    params: { id: entry.id },
+    props: { entry, prev: entries[i - 1] ?? null, next: entries[i + 1] ?? null },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data.date;
+const week = ['日', '一', '二', '三', '四', '五', '六'][d.getDay()];
+const dateLine = `${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日 · 星期${week}`;
+---
+<Base title={entry.data.title}>
+  <p class="post-meta">
+    {dateLine}{entry.data.weather && ` · ${entry.data.weather}`}
+  </p>
+  <h1 class="post-title">{entry.data.title}</h1>
+  <div class="prose">
+    <Content />
+  </div>
+  <nav class="pager">
+    <span>{prev && <a href={`/diary/${prev.id}/`}>← {prev.data.title}</a>}</span>
+    <span>{next && <a href={`/diary/${next.id}/`}>{next.data.title} →</a>}</span>
+  </nav>
+</Base>
