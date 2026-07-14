@@ -12,22 +12,23 @@ const full = title ? `${title} · Angus Love` : 'Angus Love · 日常记录';
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="Angus Love" href="/rss.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css" rel="stylesheet" />
   </head>
   <body>
     <header class="site-head">
-      <a href="/" class="wordmark">ANGUS <span>LOVE</span></a>
-      <a href="/about" class="seal" aria-label="关于我" title="关于我">愛</a>
+      <a href="/" class="wordmark">Angus Love</a>
+      <nav>
+        <a href="/about">关于</a>
+      </nav>
     </header>
     <main>
       <slot />
     </main>
     <footer class="site-foot">
-      <span>© 2026 Angus Love</span>
-      <span><a href="/rss.xml">RSS</a> · <a href="https://x.com/XAngus" rel="me">X</a></span>
+      <div class="links">
+        <a href="https://x.com/XAngus" rel="me">X</a><span>·</span><a href="https://youtube.com/@anguslove7" rel="me">YouTube</a><span>·</span><a href="https://instagram.com/anguslove" rel="me">Instagram</a><span>·</span><a href="https://facebook.com/angusloveX" rel="me">Facebook</a><span>·</span><a href="mailto:anguslove@me.com">邮箱</a><span>·</span><a href="/rss.xml">RSS</a>
+      </div>
+      <div class="copy">© 2026 Angus Love</div>
     </footer>
   </body>
 </html>
