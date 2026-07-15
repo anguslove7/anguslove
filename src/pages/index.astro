@@ -1,9 +1,5 @@
 ---
 import '../styles/global.css';
-import { getCollection } from 'astro:content';
-const entries = (await getCollection('diary'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const latest = entries[0];
 const ICON = (slug) => `https://cdn.simpleicons.org/${slug}/1f1f1d`;
 const socials = [
   { name: 'X', href: 'https://x.com/XAngus', icon: ICON('x') },
@@ -13,12 +9,10 @@ const socials = [
   { name: '微博', href: 'https://weibo.com/u/1687552764', icon: ICON('sinaweibo') },
 ];
 const cards = [
-  ...(latest ? [{ label: `最新日记：${latest.data.title}`, href: `/diary/${latest.id}/`, book: true }] : []),
-  { label: '全部日记', href: '/diary', book: true },
   { label: 'X（推特），我的主阵地', href: 'https://x.com/XAngus', icon: ICON('x') },
   { label: 'YouTube 频道', href: 'https://youtube.com/@anguslove7', icon: ICON('youtube') },
   { label: 'Instagram', href: 'https://instagram.com/anguslove', icon: ICON('instagram') },
-  { label: '微博：喜乐王子', href: 'https://weibo.com/u/1687552764', icon: ICON('sinaweibo') },
+  { label: '微博', href: 'https://weibo.com/u/1687552764', icon: ICON('sinaweibo') },
   { label: 'Facebook', href: 'https://facebook.com/angusloveX', icon: ICON('facebook') },
   { label: '关于我', href: '/about' },
 ];
