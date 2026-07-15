@@ -1,29 +1,151 @@
 ---
-import Base from '../layouts/Base.astro';
+import '../styles/global.css';
 import { getCollection } from 'astro:content';
-
 const entries = (await getCollection('diary'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const byYear = new Map();
-for (const e of entries) {
-  const y = e.data.date.getFullYear();
-  if (!byYear.has(y)) byYear.set(y, []);
-  byYear.get(y).push(e);
-}
-const fmt = (d) => `${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+const latest = entries[0];
+const socials = [
+  { name: 'X', href: 'https://x.com/XAngus', icon: 'https://cdn.simpleicons.org/x/1f1f1d' },
+  { name: 'YouTube', href: 'https://youtube.com/@anguslove7', icon: 'https://cdn.simpleicons.org/youtube/1f1f1d' },
+  { name: 'Instagram', href: 'https://instagram.com/anguslove', icon: 'https://cdn.simpleicons.org/instagram/1f1f1d' },
+  { name: 'Facebook', href: 'https://facebook.com/angusloveX', icon: 'https://cdn.simpleicons.org/facebook/1f1f1d' },
+  { name: '微博', href: 'https://weibo.com/u/1687552764', icon: 'https://cdn.simpleicons.org/sinaweibo/1f1f1d' },
+];
 ---
-<Base>
-  {[...byYear.entries()].map(([year, list]) => (
-    <section>
-      <h2 class="year">{year}</h2>
-      {list.map((e) => (
-        <div class="entry">
-          <time datetime={e.data.date.toISOString()}>{fmt(e.data.date)}</time>
-          <a href={`/diary/${e.id}/`}>{e.data.title}</a>
-          {e.data.weather && <span class="weather">{e.data.weather}</span>}
-        </div>
-      ))}
-    </section>
-  ))}
-</Base>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Angus Love</title>
+    <meta name="description" content="Angus Love · 记录真实的生活。" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Angus Love" href="/rss.xml" />
+    <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css" rel="stylesheet" />
+    <style>
+      .card-head {
+        width: min(30rem, 100% - 3rem);
+        margin: 1.6rem auto 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .pill {
+        font-size: .9rem;
+        padding: .35rem 1rem;
+        border: 1px solid var(--rule);
+        border-radius: 99px;
+        background: none;
+        color: var(--ink);
+        font-family: var(--font-body);
+        cursor: pointer;
+      }
+      .pill:hover { border-color: var(--ink-faded); }
+      .profile {
+        width: min(30rem, 100% - 3rem);
+        margin: 3rem auto 0;
+        text-align: center;
+      }
+      .avatar {
+        width: 6rem; height: 6rem;
+        border-radius: 50%;
+        border: 1px solid var(--rule);
+        object-fit: cover;
+      }
+      .profile h1 { font-size: 1.5rem; font-weight: 600; margin: 1.2rem 0 .2rem; }
+      .bio { color: var(--ink-faded); font-size: .95rem; margin: 0; }
+      .icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.4rem;
+        margin: 1.6rem 0 0;
+      }
+      .icons img, .icons svg { width: 1.35rem; height: 1.35rem; opacity: .85; }
+      .icons a:hover img, .icons a:hover svg { opacity: 1; }
+      .buttons {
+        width: min(30rem, 100% - 3rem);
+        margin: 2.4rem auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: .9rem;
+      }
+      .btn {
+        display: block;
+        text-align: center;
+        padding: .95rem 1.2rem;
+        border: 1px solid var(--rule);
+        border-radius: 99px;
+        transition: border-color .15s, background .15s;
+      }
+      .btn:hover { border-color: var(--ink-faded); background: #f5f4ef; }
+      .btn small { display: block; color: var(--ink-faded); font-size: .8rem; line-height: 1.6; }
+      .home-foot {
+        text-align: center;
+        color: var(--ink-faded);
+        font-size: .8rem;
+        margin: 4rem 0 2.5rem;
+      }
+      #toast {
+        position: fixed; left: 50%; bottom: 2.5rem;
+        transform: translateX(-50%);
+        background: var(--ink); color: var(--paper);
+        font-size: .85rem;
+        padding: .5rem 1.1rem; border-radius: 99px;
+        opacity: 0; pointer-events: none;
+        transition: opacity .25s;
+      }
+      #toast.show { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="card-head">
+      <a class="pill" href="/diary">日记</a>
+      <button class="pill" id="share" aria-label="分享此页">分享 ↗</button>
+    </div>
+
+    <main class="profile">
+      <img class="avatar" src="/avatar.svg" alt="Angus Love" />
+      <h1>Angus Love</h1>
+      <p class="bio">连续创业者。写日常，写观察，记录真实的生活。</p>
+      <div class="icons">
+        {socials.map((s) => (
+          <a href={s.href} rel="me" aria-label={s.name} title={s.name}>
+            <img src={s.icon} alt={s.name} loading="lazy" />
+          </a>
+        ))}
+        <a href="mailto:anguslove@me.com" aria-label="邮箱" title="邮箱">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1d" stroke-width="1.6"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+        </a>
+      </div>
+
+      <div class="buttons">
+        {latest && (
+          <a class="btn" href={`/diary/${latest.id}/`}>
+            最新日记：{latest.data.title}
+            <small>{latest.data.date.getFullYear()} 年 {latest.data.date.getMonth() + 1} 月 {latest.data.date.getDate()} 日</small>
+          </a>
+        )}
+        <a class="btn" href="/diary">全部日记</a>
+        <a class="btn" href="/about">关于我</a>
+      </div>
+    </main>
+
+    <footer class="home-foot">© 2026 Angus Love</footer>
+    <div id="toast">链接已复制</div>
+
+    <script>
+      const btn = document.getElementById('share');
+      const toast = document.getElementById('toast');
+      btn?.addEventListener('click', async () => {
+        const data = { title: 'Angus Love', text: 'Angus Love · 记录真实的生活', url: location.origin };
+        if (navigator.share) {
+          try { await navigator.share(data); } catch {}
+        } else {
+          await navigator.clipboard.writeText(location.origin);
+          toast?.classList.add('show');
+          setTimeout(() => toast?.classList.remove('show'), 1800);
+        }
+      });
+    </script>
+  </body>
+</html>
