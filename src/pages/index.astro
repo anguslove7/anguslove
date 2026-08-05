@@ -64,8 +64,6 @@ const cards = [
       }
       .round:hover { border-color: #a9a7a1; }
       .round svg { width: 1.15rem; height: 1.15rem; }
-      .round.logo { padding: 0; overflow: hidden; background: #000; }
-      .round.logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
       main { width: min(26rem, 100% - 2.4rem); margin: 0 auto; text-align: center; flex: 1; }
 
@@ -123,8 +121,8 @@ const cards = [
   </head>
   <body>
     <div class="top">
-      <a class="round logo" href="/diary" aria-label="日记" title="日记">
-        <img src="/logo.png" alt="Angus Love" />
+      <a class="round" href="/diary" aria-label="日记" title="日记">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.6-4.5-2-8-2v15c3.5 0 6 .4 8 2 2-1.6 4.5-2 8-2V4c-3.5 0-6 .4-8 2Z"/><path d="M12 6v15"/></svg>
       </a>
       <button class="round" id="share" aria-label="分享" title="分享">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7.5 7.5 4.5-4.5 4.5 4.5"/><path d="M5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7"/></svg>
