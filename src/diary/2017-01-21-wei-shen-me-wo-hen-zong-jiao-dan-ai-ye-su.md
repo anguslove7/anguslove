@@ -5,10 +5,6 @@ date: 2017-01-21
 
 这个视频很热门，不论是在国外YouTube，还是国内优酷、微博，都曾是在基督徒圈子中广为传播的一个视频。而同时也伴随着一些争议，有些基督徒认为视频中的表达过于极端，不应该将宗教与耶稣对立起来，这是不符合现今教会与耶稣的关系的，也不符合圣经的教导。我想如果他们从这个角度讲，的确是没有错的，这个视频在表达上的确容易产生误解。
 
-**《为什么我恨宗教但爱耶稣》**
-
-翻译：石平南　字幕：喜乐王子　制作者：Jefferson Bethke　源自：YouTube
-
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5em 0;">
 <iframe src="https://www.youtube.com/embed/o102hlj4uac" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
 </div>
