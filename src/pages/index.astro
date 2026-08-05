@@ -20,7 +20,7 @@ const cards = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Angus Love</title>
-    <meta name="description" content="Angus Love · 记录真实的生活。" />
+    <meta name="description" content="Angus Love · 记录真实的信仰人生。" />
     <link rel="icon" href="/logo.png" type="image/png" />
     <link rel="alternate" type="application/rss+xml" title="Angus Love" href="/rss.xml" />
     <style>
@@ -32,7 +32,7 @@ const cards = [
         --pill-ink: #f2f1ee;    /* 胶囊文字 */
         --on-bg: #1a1c20;       /* 主文字 */
         --on-bg-dim: #6f7378;   /* 次级文字 */
-        --accent: #0b7d85;      /* 青绿，取自头像 */
+        --accent: #6f625b;      /* 柔和暖灰褐，呼应页面底色 */
         --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
       }
       * { box-sizing: border-box; }
@@ -134,7 +134,7 @@ const cards = [
     <main>
       <div class="avatar-ring"><img src="/avatar.jpg" alt="Angus Love" /></div>
       <h1>Angus Love</h1>
-      <p class="bio">记录真实的生活</p>
+      <p class="bio">记录真实的信仰人生</p>
 
       <div class="cards">
         {cards.map((c) => <a class="card" href={c.href}>{c.label}</a>)}
@@ -159,7 +159,7 @@ const cards = [
       const btn = document.getElementById('share');
       const toast = document.getElementById('toast');
       btn?.addEventListener('click', async () => {
-        const data = { title: 'Angus Love', text: 'Angus Love · 记录真实的生活', url: location.origin };
+        const data = { title: 'Angus Love', text: 'Angus Love · 记录真实的信仰人生', url: location.origin };
         if (navigator.share) { try { await navigator.share(data); } catch {} }
         else {
           await navigator.clipboard.writeText(location.origin);
