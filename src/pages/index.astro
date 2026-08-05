@@ -1,20 +1,17 @@
 ---
-import '../styles/global.css';
-const ICON = (slug) => `https://cdn.simpleicons.org/${slug}/1f1f1d`;
+const ICON = (slug) => `https://cdn.simpleicons.org/${slug}/1a1c20`;
 const socials = [
   { name: 'X', href: 'https://x.com/XAngus', icon: ICON('x') },
   { name: 'YouTube', href: 'https://youtube.com/@anguslove7', icon: ICON('youtube') },
   { name: 'Instagram', href: 'https://instagram.com/anguslove', icon: ICON('instagram') },
-  { name: 'Facebook', href: 'https://facebook.com/angusloveX', icon: ICON('facebook') },
   { name: '微博', href: 'https://weibo.com/u/1687552764', icon: ICON('sinaweibo') },
+  { name: 'Facebook', href: 'https://facebook.com/angusloveX', icon: ICON('facebook') },
 ];
 const cards = [
-  { label: 'X（推特），我的主阵地', href: 'https://x.com/XAngus', icon: ICON('x') },
-  { label: 'YouTube 频道', href: 'https://youtube.com/@anguslove7', icon: ICON('youtube') },
-  { label: 'Instagram', href: 'https://instagram.com/anguslove', icon: ICON('instagram') },
-  { label: '微博', href: 'https://weibo.com/u/1687552764', icon: ICON('sinaweibo') },
-  { label: 'Facebook', href: 'https://facebook.com/angusloveX', icon: ICON('facebook') },
+  { label: '日记', href: '/diary' },
   { label: '关于我', href: '/about' },
+  { label: 'X（推特）', href: 'https://x.com/XAngus' },
+  { label: 'YouTube 频道', href: 'https://youtube.com/@anguslove7' },
 ];
 ---
 <!doctype html>
@@ -28,93 +25,102 @@ const cards = [
     <link rel="alternate" type="application/rss+xml" title="Angus Love" href="/rss.xml" />
     <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css" rel="stylesheet" />
     <style>
+      :root {
+        /* 想换配色改这两行就行 */
+        --bg: #e9e8e5;          /* 页面底色，与头像网格底一致 */
+        --bg-deep: #dedcd7;     /* 头像圆底 */
+        --pill: #1a1c20;        /* 胶囊按钮（深墨，呼应头像人像） */
+        --pill-ink: #f2f1ee;    /* 胶囊文字 */
+        --on-bg: #1a1c20;       /* 主文字 */
+        --on-bg-dim: #6f7378;   /* 次级文字 */
+        --accent: #0b7d85;      /* 青绿，取自头像 */
+        --font: "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--bg); font-family: var(--font); -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        color: var(--on-bg);
+        line-height: 1.7;
+      }
+      a { color: inherit; text-decoration: none; }
+
       .top {
-        width: min(30rem, 100% - 2.4rem);
-        margin: 1.4rem auto 0;
+        width: min(26rem, 100% - 2.4rem);
+        margin: 1.2rem auto 0;
         display: flex;
         justify-content: space-between;
       }
       .round {
-        width: 2.7rem; height: 2.7rem;
+        width: 2.6rem; height: 2.6rem;
         display: grid; place-items: center;
-        border: 1px solid var(--rule);
         border-radius: 50%;
-        background: #fff;
-        color: var(--ink);
+        background: #fff; border: 1px solid #d8d6d1;
+        color: var(--on-bg);
         cursor: pointer;
-        box-shadow: 0 1px 3px rgba(31,31,29,.05);
       }
-      .round:hover { border-color: var(--ink-faded); }
+      .round:hover { border-color: #a9a7a1; }
       .round svg { width: 1.15rem; height: 1.15rem; }
-      .profile {
-        width: min(30rem, 100% - 2.4rem);
-        margin: 1.6rem auto 0;
-        text-align: center;
-      }
-      .avatar {
-        width: 6.2rem; height: 6.2rem;
+
+      main { width: min(26rem, 100% - 2.4rem); margin: 0 auto; text-align: center; flex: 1; }
+
+      .avatar-ring {
+        width: 8.4rem; height: 8.4rem;
+        margin: 2.2rem auto 0;
         border-radius: 50%;
-        object-fit: cover;
+        background: var(--bg-deep);
+        display: grid; place-items: center;
+        overflow: hidden;
       }
-      .profile h1 { font-size: 1.4rem; font-weight: 600; margin: 1rem 0 .3rem; }
-      .bio { color: var(--ink-faded); font-size: .93rem; margin: 0; line-height: 1.9; }
-      .icons {
-        display: flex;
-        justify-content: center;
-        gap: 1.3rem;
-        margin: 1.2rem 0 0;
-      }
-      .icons img, .icons svg { width: 1.25rem; height: 1.25rem; opacity: .85; }
-      .icons a:hover img, .icons a:hover svg { opacity: 1; }
+      .avatar-ring img { width: 100%; height: 100%; object-fit: cover; }
+
+      h1 { font-size: 1.55rem; font-weight: 600; margin: 1.1rem 0 .2rem; letter-spacing: .02em; }
+      .bio { color: var(--accent); font-size: .95rem; margin: 0; }
+
       .cards {
-        width: min(30rem, 100% - 2.4rem);
-        margin: 2rem auto 0;
+        margin: 2rem 0 0;
         display: flex;
         flex-direction: column;
         gap: .85rem;
       }
       .card {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 3.4rem;
-        padding: .6rem 3.4rem;
-        text-align: center;
-        background: #fff;
-        border: 1px solid var(--rule);
+        min-height: 3.5rem;
+        display: grid;
+        place-items: center;
+        background: var(--pill);
+        color: var(--pill-ink);
         border-radius: 99px;
-        box-shadow: 0 1px 3px rgba(31,31,29,.05);
-        transition: transform .12s, box-shadow .12s;
-        font-size: .95rem;
+        font-size: 1rem;
+        transition: transform .12s, filter .12s;
       }
-      .card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 3px 10px rgba(31,31,29,.08);
+      .card:hover { transform: translateY(-1px); filter: brightness(1.04); }
+
+      .icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 1.8rem 0 0;
       }
-      .card .lead {
-        position: absolute;
-        left: .55rem;
-        width: 2.3rem; height: 2.3rem;
-        display: grid; place-items: center;
-        border-radius: 50%;
-        background: var(--paper);
+      .icons img, .icons svg { width: 1.5rem; height: 1.5rem; opacity: .9; }
+      .icons a:hover img, .icons a:hover svg { opacity: 1; }
+
+      .hero {
+        width: 100%;
+        margin: 2.4rem 0 0;
+        display: block;
       }
-      .card .lead img, .card .lead svg { width: 1.15rem; height: 1.15rem; }
-      .home-foot {
-        text-align: center;
-        color: var(--ink-faded);
-        font-size: .8rem;
-        margin: 3.5rem 0 2.5rem;
-      }
+      .hero img { width: 100%; display: block; }
+
+      .foot { text-align: center; color: var(--on-bg-dim); font-size: .78rem; padding: 1.6rem 0 2rem; }
+
       #toast {
-        position: fixed; left: 50%; bottom: 2.5rem;
-        transform: translateX(-50%);
-        background: var(--ink); color: var(--paper);
-        font-size: .85rem;
-        padding: .5rem 1.1rem; border-radius: 99px;
-        opacity: 0; pointer-events: none;
-        transition: opacity .25s;
+        position: fixed; left: 50%; bottom: 2.5rem; transform: translateX(-50%);
+        background: var(--pill); color: var(--pill-ink);
+        font-size: .85rem; padding: .5rem 1.1rem; border-radius: 99px;
+        opacity: 0; pointer-events: none; transition: opacity .25s;
       }
       #toast.show { opacity: 1; }
     </style>
@@ -124,15 +130,20 @@ const cards = [
       <a class="round" href="/diary" aria-label="日记" title="日记">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.6-4.5-2-8-2v15c3.5 0 6 .4 8 2 2-1.6 4.5-2 8-2V4c-3.5 0-6 .4-8 2Z"/><path d="M12 6v15"/></svg>
       </a>
-      <button class="round" id="share" aria-label="分享此页" title="分享">
+      <button class="round" id="share" aria-label="分享" title="分享">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7.5 7.5 4.5-4.5 4.5 4.5"/><path d="M5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7"/></svg>
       </button>
     </div>
 
-    <main class="profile">
-      <img class="avatar" src="/avatar.jpg" alt="Angus Love" />
+    <main>
+      <div class="avatar-ring"><img src="/avatar.jpg" alt="Angus Love" /></div>
       <h1>Angus Love</h1>
-      <p class="bio">连续创业者。写日常，写观察，记录真实的生活。</p>
+      <p class="bio">记录真实的生活</p>
+
+      <div class="cards">
+        {cards.map((c) => <a class="card" href={c.href}>{c.label}</a>)}
+      </div>
+
       <div class="icons">
         {socials.map((s) => (
           <a href={s.href} rel="me" aria-label={s.name} title={s.name}>
@@ -140,22 +151,13 @@ const cards = [
           </a>
         ))}
         <a href="mailto:anguslove@me.com" aria-label="邮箱" title="邮箱">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1d" stroke-width="1.6"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1a1c20" stroke-width="1.6"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
         </a>
-      </div>
-
-      <div class="cards">
-        {cards.map((c) => (
-          <a class="card" href={c.href}>
-            {c.icon && <span class="lead"><img src={c.icon} alt="" loading="lazy" /></span>}
-            {c.book && <span class="lead"><svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.6-4.5-2-8-2v15c3.5 0 6 .4 8 2 2-1.6 4.5-2 8-2V4c-3.5 0-6 .4-8 2Z"/><path d="M12 6v15"/></svg></span>}
-            <span>{c.label}</span>
-          </a>
-        ))}
       </div>
     </main>
 
-    <footer class="home-foot">© 2026 Angus Love</footer>
+    <div class="hero"><img src="/images/home-hero.jpg" alt="" loading="lazy" /></div>
+    <footer class="foot">© 2026 Angus Love</footer>
     <div id="toast">链接已复制</div>
 
     <script>
@@ -163,9 +165,8 @@ const cards = [
       const toast = document.getElementById('toast');
       btn?.addEventListener('click', async () => {
         const data = { title: 'Angus Love', text: 'Angus Love · 记录真实的生活', url: location.origin };
-        if (navigator.share) {
-          try { await navigator.share(data); } catch {}
-        } else {
+        if (navigator.share) { try { await navigator.share(data); } catch {} }
+        else {
           await navigator.clipboard.writeText(location.origin);
           toast?.classList.add('show');
           setTimeout(() => toast?.classList.remove('show'), 1800);
